@@ -21,11 +21,11 @@ export default class ProductsController {
   public async store({ request }: HttpContext) {
     const productData = request.only(['name', 'image', 'price', 'description', 'categoryId'])
 
-    //   if (productData.price) {
-    //     productData.price = parseFloat(
-    //         productData.price.toString().replace(/\./g, '').replace(',', '.')
-    //     )
-    // }
+    if (productData.price) {
+      productData.price = parseFloat(
+        productData.price.toString().replace(/[^\d,]/g, '').replace(',', '.')
+      )
+    }
 
     const image = request.file('image', {
         size: '2mb',
